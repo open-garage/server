@@ -25,8 +25,8 @@ curl -k -X POST "https://192.168.0.165:8000/api/v1/toggle" --header "Content-Typ
 { error: 0 }
 
 Errorcodes:
-* 0  = Everthing OK
-* -1 = Somthing went wrong ;)
+* 0  = Everthing is OK
+* -1 = Wrong or missing access token
 
 ## Get system infos
 curl -k -X GET "https://192.168.0.165:8000/api/v1/"
