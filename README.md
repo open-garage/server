@@ -8,13 +8,13 @@ http://greengeckodesign.com/blog/2013/06/15/creating-an-ssl-certificate-for-node
 
 # Manage Node.js Server
 ## Start service
-sudo service garage_open start
+sudo service open-garage start
 
 ## Stop service
-sudo service garage_open stop
+sudo service open-garage stop
 
 ## Restart service
-sudo service garage_open restart
+sudo service open-garage restart
 
 # Api Calls
 ## Toggle garage (api/v1/toggle)
