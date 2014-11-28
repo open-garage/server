@@ -7,7 +7,7 @@ server.csr
 server.key
 
 # open-garage keys
-key.js
+keys.js
 
 # log file
 garagetoggle.log
