@@ -17,8 +17,16 @@ sudo service garage_open stop
 sudo service garage_open restart
 
 # Api Calls
-## Toggle garage
+## Toggle garage (api/v1/toggle)
+### Command
 curl -k -X POST "https://192.168.0.165:8000/api/v1/toggle" --header "Content-Type: application/json" --data '{"token":"A"}'
+
+### Response
+{ error: 0 }
+
+Errorcodes:
+* 0  = Everthing OK
+* -1 = Somthing went wrong ;)
 
 ## Get system infos
 curl -k -X GET "https://192.168.0.165:8000/api/v1/"
