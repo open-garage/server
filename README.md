@@ -1,5 +1,6 @@
 # Setup
 ## Install Node.js
+```
 sudo su -
 cd /opt
 wget http://nodejs.org/dist/v0.10.28/node-v0.10.28-linux-arm-pi.tar.gz
@@ -8,6 +9,7 @@ ln -s node-v0.10.25-linux-arm-pi node
 chmod a+rw /opt/node/lib/node_modules
 chmod a+rw /opt/node/bin
 echo 'PATH=$PATH:/opt/node/bin' > /etc/profile.d/node.sh
+```
 
 Detailed Infos are available at:
 http://raspberryalphaomega.org.uk/2014/06/11/installing-and-using-node-js-on-raspberry-pi/
