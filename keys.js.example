@@ -1,0 +1,7 @@
+module.exports = {
+	// permited keys
+	permitedKeys: [
+        	'Tnetennba',
+        	'A' // remove this in production
+	]
+};
