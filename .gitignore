@@ -1,0 +1,13 @@
+# ssl keys
+ca.crt
+ca.csr
+ca.key
+server.crt
+server.csr
+server.key
+
+# open-garage keys
+key.js
+
+# log file
+garagetoggle.log
