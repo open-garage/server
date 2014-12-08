@@ -9,16 +9,49 @@ ln -s node-v0.10.25-linux-arm-pi node
 chmod a+rw /opt/node/lib/node_modules
 chmod a+rw /opt/node/bin
 echo 'PATH=$PATH:/opt/node/bin' > /etc/profile.d/node.sh
+npm -g install forever
 ```
 
 Detailed Infos are available at:
 http://raspberryalphaomega.org.uk/2014/06/11/installing-and-using-node-js-on-raspberry-pi/
 
-## Create SSL Certs
+## Install Open-Garage
+### Clone git repository
+```
+cd /opt
+sudo mkdir open-garage
+sudo chown pi:pi open-garage/
+git clone https://github.com/open-garage/server.git open-garage/
+´´´
+
+### Setup init script
+```
+cd /opt/open-garage/
+sudo cp open-garage /etc/init.d/
+sudo update-rc.d open-garage defaults
+´´´
+
+### Install Node.js modules
+```
+cd /opt/open-garage/
+npm install express
+npm install body-parser
+´´´
+
+### Create SSL Certs
 http://greengeckodesign.com/blog/2013/06/15/creating-an-ssl-certificate-for-node-dot-js/
 
+Cert files (server.key, server.crt and ca.crt) needs to be in /opt/open-garage/
 
-# Manage Node.js Server
+### Create entrance keys
+```
+cd /opt/open-garage
+cp keys.js.example keys.js
+´´´
+
+Now edit the keys.js file an add entrance key strings.
+
+# Manage Open-Garage Server
 ## Start service
 ```
 sudo service open-garage start
