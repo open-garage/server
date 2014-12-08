@@ -5,7 +5,7 @@ var fs = require('fs');
 var spawn = require('child_process').spawn;
 var keys = require('./keys');
 
-var currentVersion = 0.2;
+var currentVersion = '0.2.1';
 var currentName = 'Open Garage';
 var capi = 'v1';
 var httpsPort = 8000;
@@ -40,31 +40,73 @@ app.get(['/', '/api/' + capi], function(req, res) {
 });
 
 /**
-* API ERROR CODES:
-*  0: Everything is OK
-* -1: Wrong or missing access token
-*/
+ * API TOGGLE CODES:
+ *  0: Everything is OK
+ * -1: Wrong or missing access token
+ */
 // api call: toggle
 app.post('/api/' + capi + '/toggle', function (req, res) {
-	var errorcode = 0;
-	//var token = req.param('token');
+	var statuscode = 0;
 	var token = req.body.token;
 
-	if (permitedKeys.indexOf(token) > -1) {
-		console.log('API: Toggle token: ' + token + ' Date: ' + Date().toString());
+	if (isTokenValid(token)) {
+		logAPICall('Toggle', false, 'token: ' + token)
 		// execute shell script
 		spawn('./toggle.sh');
 	} else {
-		console.log('ERROR: Toggle token: ' + token + ' Date: ' + Date().toString());
-		errorcode = -1;
+		logAPICall('Toggle', true, 'token: ' + token)
+		statuscode = -1;
 	}
 	
 	// create response
 	res.contentType('application/json');
-	result = { error: errorcode };
+	result = { status: statuscode };
 	
 	res.send(JSON.stringify(result));
 });
 
+/**
+ * API STATUS CODES:
+ * 0: Door is open
+ * 1: Door is closed
+ * -1: Wrong or missing access token
+ */
+
+// api call: status
+app.post('/api/' + capi + '/status', function(req, res) {
+	var statuscode = -1;
+	var token = req.body.token;
+	
+	if (isTokenValid(token)) {
+		statuscode = 1;
+		logAPICall('Status', false, 'current status: ' + statuscode);
+	}
+	
+	// create response
+	res.contentType('application/json');
+	result = { status: statuscode };
+	
+	res.send(JSON.stringify(result));	
+});
+
 // start the server
 https.createServer(options, app).listen(httpsPort);
+
+// check if auth token is valid
+function isTokenValid(token) {
+	if (permitedKeys.indexOf(token) > -1) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+function logAPICall(apiCall, error, message) {
+	var apiTxt = 'API';
+	
+	if (error) {
+		apiTxt = 'ERROR';
+	}
+	
+	console.log(apiTxt + ': ' + apiCall + ' ' + message + ' Date: ' + Date().toString());
+}

@@ -89,10 +89,24 @@ curl -k -X POST "https://192.168.0.165:8000/api/v1/toggle" --header "Content-Typ
 ```
 
 ### Response
-{ error: 0 }
+{ status: 0 }
 
-Errorcodes:
+Status Codes:
 * 0  = Everthing is OK
+* -1 = Wrong or missing access token
+
+## Garage door status (api/v1/status)
+### Command
+```
+curl -k -X POST "https://192.168.0.165:8000/api/v1/status" --header "Content-Type: application/json" --data '{"token":"A"}'
+```
+
+### Response
+{ status: 0 }
+
+Status Codes:
+* 0  = Door is open
+* 1  = Door is closed
 * -1 = Wrong or missing access token
 
 ## Get system infos
