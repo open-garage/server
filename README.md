@@ -39,9 +39,10 @@ npm install body-parser
 ´´´
 
 ### Create SSL Certs
-http://greengeckodesign.com/blog/2013/06/15/creating-an-ssl-certificate-for-node-dot-js/
-
 Cert files (server.key, server.crt and ca.crt) needs to be in /opt/open-garage/
+
+Detailed Infos are available at:
+http://greengeckodesign.com/blog/2013/06/15/creating-an-ssl-certificate-for-node-dot-js/
 
 ### Create entrance keys
 ```
@@ -50,6 +51,19 @@ cp keys.js.example keys.js
 ´´´
 
 Now edit the keys.js file an add entrance key strings.
+
+### Install wiringPi
+```
+cd /opt
+sudo mkdir wiringPi
+sudo chown -R pi:pi wiringPi/
+git clone git://git.drogon.net/wiringPi wiringPi/
+cd wiringPi/
+./build
+´´´
+
+Detailed Infos are available at:
+http://wiringpi.com/download-and-install/ 
 
 # Manage Open-Garage Server
 ## Start service
