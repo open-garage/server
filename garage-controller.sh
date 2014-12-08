@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 ###############################################################################
 #                                                                             #
 # Simple script which communicates with the relay for the garage door         #
@@ -9,16 +9,37 @@
 #                                                                             #
 ###############################################################################
 
-# LED Pin - wiringPi pin 0 is BCM_GPIO 17.
-PIN=0
+# Relay PIN
+R1PIN=0
 
-DATE=`date`
-LOG=garagetoggle.log
+# Door status PIN
+I1PIN=7
+
+DATE=`date "+%d.%m.%G-%H:%M"`
+LOG=garage-controller.log
 GPIO=/usr/local/bin/gpio
 
-echo "CMD: toggle $DATE" >> $LOG
 
-$GPIO mode $PIN out
-$GPIO write $PIN 0
-sleep 1
-$GPIO write $PIN 1
+function api_toggle()
+{
+	echo "CMD: toggle $DATE" >> $LOG
+	
+	$GPIO mode $R1PIN out
+	$GPIO write $R1PIN 0
+	sleep 1
+	$GPIO write $R1PIN 1
+}
+
+function api_status()
+{
+	echo "CMD: status $DATE" >> $LOG
+	$GPIO read $I1PIN
+}
+
+if [ "$1" = "toggle" ]; then
+	api_toggle
+elif [ "$1" = "status" ]; then
+	api_status
+fi
+
+# vim:ts=4:sw=4:

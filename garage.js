@@ -50,12 +50,12 @@ app.post('/api/' + capi + '/toggle', function (req, res) {
 	var token = req.body.token;
 
 	if (isTokenValid(token)) {
-		logAPICall('Toggle', false, 'token: ' + token)
 		// execute shell script
-		spawn('./toggle.sh');
+		spawn('./garage-controller.sh', ['toggle']);
+		logAPICall('Toggle', false, 'token: ' + token)
 	} else {
-		logAPICall('Toggle', true, 'token: ' + token)
 		statuscode = -1;
+		logAPICall('Toggle', true, 'token: ' + token)
 	}
 	
 	// create response
@@ -79,14 +79,21 @@ app.post('/api/' + capi + '/status', function(req, res) {
 	
 	if (isTokenValid(token)) {
 		statuscode = 1;
-		logAPICall('Status', false, 'current status: ' + statuscode);
+		
+		cmd = spawn('./garage-controller.sh', ['status']);
+		
+		cmd.stdout.on('data', function(data) {
+			// convert return values to string and remove \n
+			statuscode = data.toString().replace(/\n$/, '');
+			logAPICall('Status', false, 'current status: ' + statuscode);
+			
+			// create response
+			res.contentType('application/json');
+			result = { status: statuscode };
+	
+			res.send(JSON.stringify(result));
+		});
 	}
-	
-	// create response
-	res.contentType('application/json');
-	result = { status: statuscode };
-	
-	res.send(JSON.stringify(result));	
 });
 
 // start the server
