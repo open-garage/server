@@ -11,3 +11,6 @@ keys.js
 
 # log file
 garagetoggle.log
+
+# node.js modules
+node_modules/
