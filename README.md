@@ -10,7 +10,7 @@ chmod a+rw /opt/node/lib/node_modules
 chmod a+rw /opt/node/bin
 echo 'PATH=$PATH:/opt/node/bin' > /etc/profile.d/node.sh
 npm -g install forever
-```
+´´´
 
 Detailed Infos are available at:
 http://raspberryalphaomega.org.uk/2014/06/11/installing-and-using-node-js-on-raspberry-pi/
@@ -69,24 +69,24 @@ http://wiringpi.com/download-and-install/
 ## Start service
 ```
 sudo service open-garage start
-```
+´´´
 
 ## Stop service
 ```
 sudo service open-garage stop
-```
+´´´
 
 ## Restart service
 ```
 sudo service open-garage restart
-```
+´´´
 
 # Api Calls
 ## Toggle garage (api/v1/toggle)
 ### Command
 ```
 curl -k -X POST "https://192.168.0.165:8000/api/v1/toggle" --header "Content-Type: application/json" --data '{"token":"A"}'
-```
+´´´
 
 ### Response
 { status: 0 }
@@ -99,7 +99,7 @@ Status Codes:
 ### Command
 ```
 curl -k -X POST "https://192.168.0.165:8000/api/v1/status" --header "Content-Type: application/json" --data '{"token":"A"}'
-```
+´´´
 
 ### Response
 { status: 0 }
@@ -113,4 +113,4 @@ Status Codes:
 ### Command
 ```
 curl -k -X GET "https://192.168.0.165:8000/api/v1/"
-```
+´´´
