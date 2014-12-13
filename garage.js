@@ -48,11 +48,16 @@ app.get(['/', '/api/' + capi], function(req, res) {
 app.post('/api/' + capi + '/toggle', function (req, res) {
 	var statuscode = 0;
 	var token = req.body.token;
+	var debug = req.body.debug;
 
 	if (isTokenValid(token)) {
-		// execute shell script
-		spawn('./garage-controller.sh', ['toggle']);
-		logAPICall('Toggle', false, 'token: ' + token)
+		if (debug == 1) {
+			logAPICall('DEBUG Toggle', false, 'token: ' + token)
+		} else {
+			// execute shell script
+			spawn('./garage-controller.sh', ['toggle']);
+			logAPICall('Toggle', false, 'token: ' + token)
+		}
 	} else {
 		statuscode = -1;
 		logAPICall('Toggle', true, 'token: ' + token)
