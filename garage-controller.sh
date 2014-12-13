@@ -19,18 +19,12 @@ DATE=`date "+%d.%m.%G-%H:%M"`
 LOG=garage-controller.log
 GPIO=/usr/local/bin/gpio
 
-function gpio_init()
-{
-	# set relay pin to out
-	$GPIO mode $R1PIN out
-	
-	# set door status pin to in
-	$GPIO mode $I1PIN in
-}
-
 function api_toggle()
 {
 	echo "CMD: toggle $DATE" >> $LOG
+	
+	# set relay pin to out
+	$GPIO mode $R1PIN out
 	
 	$GPIO write $R1PIN 0
 	sleep 1
@@ -40,6 +34,10 @@ function api_toggle()
 function api_status()
 {
 	echo "CMD: status $DATE" >> $LOG
+	
+	# set door status pin to in
+	$GPIO mode $I1PIN in
+	
 	$GPIO read $I1PIN
 }
 
@@ -47,6 +45,8 @@ if [ "$1" = "toggle" ]; then
 	api_toggle
 elif [ "$1" = "status" ]; then
 	api_status
+else
+	echo "Usage: toggle | status"
 fi
 
 # vim:ts=4:sw=4:
