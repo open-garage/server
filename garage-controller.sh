@@ -1,11 +1,11 @@
 #!/bin/bash
 ###############################################################################
 #                                                                             #
-# Simple script which communicates with the relay for the garage door         #
+# Simple script which communicates with the garage door                       #
 #                                                                             #
-# @version: 1.0.0                                                             #
+# @version: 1.0.1                                                             #
 # @author: Steiner Patrick <patrick@helmsdeep.at>                             #
-# @date: 21.10.2014 22:07                                                     #
+# @date: 13.13.2014 13:17                                                     #
 #                                                                             #
 ###############################################################################
 
@@ -19,12 +19,19 @@ DATE=`date "+%d.%m.%G-%H:%M"`
 LOG=garage-controller.log
 GPIO=/usr/local/bin/gpio
 
+function gpio_init()
+{
+	# set relay pin to out
+	$GPIO mode $R1PIN out
+	
+	# set door status pin to in
+	$GPIO mode $I1PIN in
+}
 
 function api_toggle()
 {
 	echo "CMD: toggle $DATE" >> $LOG
 	
-	$GPIO mode $R1PIN out
 	$GPIO write $R1PIN 0
 	sleep 1
 	$GPIO write $R1PIN 1
