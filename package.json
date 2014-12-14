@@ -1,0 +1,8 @@
+{
+	"name": "open-garage",
+	"version": "1.0.0",
+	"dependencies": {
+		"express": ">= 4.10.4"
+		"body-parser": ">= 1.10.0"
+	}
+}
