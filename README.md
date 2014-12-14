@@ -66,7 +66,7 @@ cp keys.js.example keys.js
 
 Now edit the keys.js file an add entrance key strings.
 
-### Install wiringPi
+### Install wiringPi (Optional Step)
 ```
 cd /opt
 sudo mkdir wiringPi
