@@ -34,8 +34,7 @@ sudo update-rc.d open-garage defaults
 ### Install Node.js modules
 ```
 cd /opt/open-garage/
-npm install express
-npm install body-parser
+npm install
 ```
 
 ### Create SSL Certs
