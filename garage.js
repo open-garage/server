@@ -2,13 +2,31 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var https = require('https');
 var fs = require('fs');
-var spawn = require('child_process').spawn;
 var keys = require('./keys');
 
 var currentVersion = '0.2.1';
 var currentName = 'Open Garage';
 var capi = 'v1';
 var httpsPort = 8000;
+
+// GPIO setup
+var Gpio = require('onoff').Gpio,
+	//door status GPIO
+	doorStatus = new Gpio(4, 'in', 'both'),
+	// door relay GPIO
+	doorRelay = new Gpio(17, 'high');
+
+var currentDoorStatus = 1;
+
+// watch the door status
+doorStatus.watch(function(err, value) {
+	if (err) return;
+	
+	if (currentDoorStatus != value) {
+		console.log("DBG: Door status changed: " + value);
+		currentDoorStatus = value;
+	}
+});
 
 // permited keys
 var permitedKeys = keys.permitedKeys;
@@ -54,8 +72,7 @@ app.post('/api/' + capi + '/toggle', function (req, res) {
 		if (debug == 1) {
 			logAPICall('DEBUG Toggle', false, 'token: ' + token)
 		} else {
-			// execute shell script
-			spawn('./garage-controller.sh', ['toggle']);
+			toggleDoor();
 			logAPICall('Toggle', false, 'token: ' + token)
 		}
 	} else {
@@ -83,26 +100,30 @@ app.post('/api/' + capi + '/status', function(req, res) {
 	var token = req.body.token;
 	
 	if (isTokenValid(token)) {
-		statuscode = 1;
+		statuscode = currentDoorStatus;
 		
-		cmd = spawn('./garage-controller.sh', ['status']);
-		
-		cmd.stdout.on('data', function(data) {
-			// convert return values to string and remove \n
-			statuscode = data.toString().replace(/\n$/, '');
-			logAPICall('Status', false, 'current status: ' + statuscode);
-			
-			// create response
-			res.contentType('application/json');
-			result = { status: statuscode };
-	
-			res.send(JSON.stringify(result));
-		});
+		logAPICall('Status', false, 'current status: ' + statuscode);
 	}
+	
+	// create response
+	res.contentType('application/json');
+	result = { status: statuscode };
+
+	res.send(JSON.stringify(result));
 });
 
 // start the server
 https.createServer(options, app).listen(httpsPort);
+
+// toggle the relay for the garage door
+function toggleDoor() {
+	doorRelay.writeSync(0);
+	
+	// wait 1 second
+	setTimeout(function() {
+		doorRelay.writeSync(1);
+	}, 1000);
+}
 
 // check if auth token is valid
 function isTokenValid(token) {

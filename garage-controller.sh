@@ -11,13 +11,22 @@
 
 # Relay PIN
 R1PIN=0
+R1PINPI=17
 
 # Door status PIN
 I1PIN=7
+I1PINPI=4
 
 DATE=`date "+%d.%m.%G-%H:%M"`
 LOG=garage-controller.log
 GPIO=/usr/local/bin/gpio
+
+function init()
+{
+	sudo $GPIO export $R1PINPI out
+	sudo $GPIO export $I1PINPI in
+	$GPIO mode $I1PINPI up
+}
 
 function api_toggle()
 {
@@ -45,8 +54,10 @@ if [ "$1" = "toggle" ]; then
 	api_toggle
 elif [ "$1" = "status" ]; then
 	api_status
+elif [ "$1" = "init" ]; then
+	init
 else
-	echo "Usage: toggle | status"
+	echo "Usage: toggle | status | init"
 fi
 
 # vim:ts=4:sw=4:
