@@ -66,7 +66,7 @@ cp keys.js.example keys.js
 
 Now edit the keys.js file an add entrance key strings.
 
-### Install wiringPi (Optional Step)
+### Install wiringPi
 ```
 cd /opt
 sudo mkdir wiringPi
@@ -164,8 +164,8 @@ curl -k -X POST "https://192.168.0.165:8000/api/v1/status" --header "Content-Typ
 { status: 0 }
 
 Status Codes:
-* 0  = Door is open
-* 1  = Door is closed
+* 0  = Door is closed
+* 1  = Door is open
 * -1 = Wrong or missing access token
 
 ## Get system infos

@@ -11,11 +11,9 @@
 
 # Relay PIN
 R1PIN=0
-R1PINPI=17
 
 # Door status PIN
 I1PIN=7
-I1PINPI=4
 
 DATE=`date "+%d.%m.%G-%H:%M"`
 LOG=garage-controller.log
@@ -23,9 +21,9 @@ GPIO=/usr/local/bin/gpio
 
 function init()
 {
-	sudo $GPIO export $R1PINPI out
-	sudo $GPIO export $I1PINPI in
-	$GPIO mode $I1PINPI up
+	sudo $GPIO export $R1PIN out
+	sudo $GPIO export $I1PIN in
+	$GPIO mode $I1PIN up
 }
 
 function api_toggle()

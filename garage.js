@@ -23,7 +23,8 @@ doorStatus.watch(function(err, value) {
 	if (err) return;
 	
 	if (currentDoorStatus != value) {
-		console.log("DBG: Door status changed: " + value);
+		logAPICall('Door status changed', false, garageStatusToString());
+		
 		currentDoorStatus = value;
 	}
 });
@@ -89,8 +90,8 @@ app.post('/api/' + capi + '/toggle', function (req, res) {
 
 /**
  * API STATUS CODES:
- * 0: Door is open
- * 1: Door is closed
+ * 0: Door is closed
+ * 1: Door is open
  * -1: Wrong or missing access token
  */
 
@@ -101,8 +102,6 @@ app.post('/api/' + capi + '/status', function(req, res) {
 	
 	if (isTokenValid(token)) {
 		statuscode = currentDoorStatus;
-		
-		logAPICall('Status', false, 'current status: ' + statuscode);
 	}
 	
 	// create response
@@ -134,6 +133,7 @@ function isTokenValid(token) {
 	}
 }
 
+// write into log file
 function logAPICall(apiCall, error, message) {
 	var apiTxt = 'API';
 	
@@ -142,4 +142,19 @@ function logAPICall(apiCall, error, message) {
 	}
 	
 	console.log(apiTxt + ': ' + apiCall + ' ' + message + ' Date: ' + Date().toString());
+}
+
+function garageStatusToString() {
+	var statusString = "ERROR";
+	
+	switch (currentDoorStatus) {
+	case 0:
+		statusString = "CLOSED";
+		break;
+	case 1:
+		statusString = "OPEN";
+		break;
+	}
+	
+	return statusString;
 }
