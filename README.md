@@ -107,7 +107,7 @@ sudo make install
 
 #### Set iBeacon UUID
 
-TODO
+Edit the UUID int the /opt/open-garage/ibeacon-controller.sh file.
 
 #### Enable iBeacon
 Edit the init script (/etc/init.d/open-garage)
