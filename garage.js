@@ -4,7 +4,7 @@ var https = require('https');
 var fs = require('fs');
 var keys = require('./keys');
 
-var currentVersion = '0.2.1';
+var currentVersion = '0.3.0';
 var currentName = 'Open Garage';
 var capi = 'v1';
 var httpsPort = 8000;
