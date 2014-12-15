@@ -14,6 +14,18 @@ HCIDEV="hci0"
 HCICONFIG=/usr/local/bin/hciconfig
 HCITOOL=/usr/local/bin/hcitool
 
+# iBeacon UUID
+BEACONUUID="1E 02 01 1A 1A FF 4C 00 02 15 63 6F 3F 8F 64 91 4B EE 95 F7 D8 CC 64 A8 63 B5"
+
+# iBeacon Major ID
+BEACONMAJORID="00 00"
+
+# iBeacon Minor ID
+BEACONMINORID="00 00"
+
+# iBeacon RSSI
+BEACONPOWER="C8"
+
 function init()
 {
 	$HCICONFIG $HCIDEV up
@@ -23,7 +35,7 @@ function init()
 
 function start_advertising
 {
-	$HCITOOL -i $HCIDEV cmd 0x08 0x0008 1E 02 01 1A 1A FF 4C 00 02 15 63 6F 3F 8F 64 91 4B EE 95 F7 D8 CC 64 A8 63 B5 00 00 00 00 C8
+	$HCITOOL -i $HCIDEV cmd 0x08 0x0008 $BEACONUUID $BEACONMAJORID $BEACONMINORID $BEACONPOWER
 }
 
 function start_advertising

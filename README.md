@@ -80,7 +80,7 @@ Detailed Infos are available at:
 http://wiringpi.com/download-and-install/
 
 ### iBeacon (Optional Step)
-####Install BlueZ
+#### Install BlueZ
 Install required libraries
 ```
 sudo apt-get install libusb-dev 
@@ -103,6 +103,18 @@ cd bluez-5.26
 LDFLAGS=-lrt ./configure --prefix=/usr/local --sysconfdir=/etc --localstatedir=/var --enable-library
 make
 sudo make install
+```
+
+#### Set iBeacon UUID
+
+TODO
+
+#### Enable iBeacon
+Edit the init script (/etc/init.d/open-garage)
+
+Enable iBeacon support
+```
+STARTBEACON="1"
 ```
 
 # Manage Open-Garage Server

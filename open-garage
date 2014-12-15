@@ -13,6 +13,8 @@
 export PATH=$PATH:/opt/node/bin
 export NODE_PATH=$NODE_PATH:/opt/node/lib/node_modules
 
+STARTBEACON="0"
+
 case "$1" in
   start)
     if [ ! -d '/tmp/.forever' ]; then
@@ -20,9 +22,17 @@ case "$1" in
     fi
 
     forever start -a -l /tmp/forever.log -e /tmp/forever.error -p /tmp/.forever --sourceDir=/opt/open-garage garage.js
+	
+	if [$STARTBEACON = "1"]; then
+		/opt/open-garage/beacon-controller.sh start
+	fi
     ;;
   stop)
     forever stopall
+	
+	if [$STARTBEACON = "1"]; then
+		/opt/open-garage/beacon-controller.sh stop
+	fi
     ;;
   restart)
     forever restartall
