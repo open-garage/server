@@ -23,9 +23,8 @@ doorStatus.watch(function(err, value) {
 	if (err) return;
 	
 	if (currentDoorStatus != value) {
-		logAPICall('Door status changed', false, garageStatusToString());
-		
 		currentDoorStatus = value;
+		logAPICall('Door status changed', false, garageStatusToString());
 	}
 });
 
