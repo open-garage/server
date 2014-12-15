@@ -24,7 +24,7 @@ doorStatus.watch(function(err, value) {
 	
 	if (currentDoorStatus != value) {
 		currentDoorStatus = value;
-		logAPICall('Door status changed', false, garageStatusToString());
+		logAPICall('Door status changed', false, garageStatusToString(currentDoorStatus));
 	}
 });
 
@@ -100,7 +100,7 @@ app.post('/api/' + capi + '/status', function(req, res) {
 	var token = req.body.token;
 	
 	if (isTokenValid(token)) {
-		statuscode = currentDoorStatus;
+		statuscode = doorStatus.readSync();
 	}
 	
 	// create response
@@ -143,15 +143,15 @@ function logAPICall(apiCall, error, message) {
 	console.log(apiTxt + ': ' + apiCall + ' ' + message + ' Date: ' + Date().toString());
 }
 
-function garageStatusToString() {
-	var statusString = "ERROR";
+function garageStatusToString(doorStatus) {
+	var statusString = 'ERROR';
 	
-	switch (currentDoorStatus) {
+	switch (doorStatus) {
 	case 0:
-		statusString = "CLOSED";
+		statusString = 'CLOSED';
 		break;
 	case 1:
-		statusString = "OPEN";
+		statusString = 'OPEN';
 		break;
 	}
 	
