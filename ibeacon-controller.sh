@@ -14,8 +14,8 @@ HCIDEV="hci0"
 HCICONFIG=/usr/local/bin/hciconfig
 HCITOOL=/usr/local/bin/hcitool
 
-# iBeacon UUID
-BEACONUUID="1E 02 01 1A 1A FF 4C 00 02 15 63 6F 3F 8F 64 91 4B EE 95 F7 D8 CC 64 A8 63 B5"
+# iBeacon UUID 649F1C4B-8EF1-4E5C-A99E-81470F515FF9
+BEACONUUID="1E 02 01 1A 1A FF 4C 00 02 15 64 9F 1C 4B 8E F1 4E 5C A9 9E 81 47 0F 51 5F F9"
 
 # iBeacon Major ID
 BEACONMAJORID="00 00"
@@ -24,23 +24,25 @@ BEACONMAJORID="00 00"
 BEACONMINORID="00 00"
 
 # iBeacon RSSI
-BEACONPOWER="C8"
+BEACONPOWER="C8 00"
 
 function init()
 {
-	$HCICONFIG $HCIDEV up
-	$HCICONFIG $HCIDEV leadav 3
-	$HCICONFIG $HCIDEV noscan
+	sudo $HCICONFIG $HCIDEV up
+	sudo $HCICONFIG $HCIDEV name "Open-Garage"
+	sudo $HCICONFIG $HCIDEV leadv 3
+	sudo $HCICONFIG $HCIDEV noscan
 }
 
 function start_advertising
 {
-	$HCITOOL -i $HCIDEV cmd 0x08 0x0008 $BEACONUUID $BEACONMAJORID $BEACONMINORID $BEACONPOWER
+	sudo $HCITOOL -i $HCIDEV cmd 0x08 0x0008 $BEACONUUID $BEACONMAJORID $BEACONMINORID $BEACONPOWER
 }
 
-function start_advertising
+function stop_advertising
 {
-	killall $HCITOOL
+	sudo $HCICONFIG $HCIDEV noleadv
+	sudo $HCICONFIG $HCIDEV down
 }
 
 if [ "$1" = "start" ]; then
