@@ -77,7 +77,33 @@ cd wiringPi/
 ```
 
 Detailed Infos are available at:
-http://wiringpi.com/download-and-install/ 
+http://wiringpi.com/download-and-install/
+
+### iBeacon (Optional Step)
+####Install BlueZ
+Install required libraries
+```
+sudo apt-get install libusb-dev 
+sudo apt-get install libdbus-1-dev 
+sudo apt-get install libglib2.0-dev --fix-missing
+sudo apt-get install libudev-dev 
+sudo apt-get install libical-dev
+sudo apt-get install libreadline-dev
+```
+
+Compile BlueZ
+```
+cd /opt
+sudo mkdir bluez
+sudo chown -R pi:pi bluez/
+cd bluez/
+wget http://www.kernel.org/pub/linux/bluetooth/bluez-5.26.tar.xz
+tar xf bluez-5.26.tar.xz
+cd bluez-5.26
+LDFLAGS=-lrt ./configure --prefix=/usr/local --sysconfdir=/etc --localstatedir=/var --enable-library
+make
+sudo make install
+```
 
 # Manage Open-Garage Server
 ## Start service
