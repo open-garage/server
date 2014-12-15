@@ -16,7 +16,7 @@ var Gpio = require('onoff').Gpio,
 	// door relay GPIO
 	doorRelay = new Gpio(17, 'high');
 
-var currentDoorStatus = 1;
+var currentDoorStatus = 0;
 
 // watch the door status
 doorStatus.watch(function(err, value) {
