@@ -137,11 +137,12 @@ sudo service open-garage restart
 ## Toggle garage (api/v1/toggle)
 ### Parameters:
 * token: The authentication token
-* debug: Send debug = 1 for debugging
+* debug: Send debug = on for debugging
+* state: close, open, toggle
 
 ### Command
 ```
-curl -k -X POST "https://192.168.0.165:8000/api/v1/toggle" --header "Content-Type: application/json" --data '{"token":"A", "debug":"1"}'
+curl -k -X POST "https://192.168.0.165:8000/api/v1/toggle" --header "Content-Type: application/json" --data '{"token":"A", "state":"close", "debug":"on"}'
 ```
 
 ### Response
@@ -150,6 +151,7 @@ curl -k -X POST "https://192.168.0.165:8000/api/v1/toggle" --header "Content-Typ
 Status Codes:
 * 0  = Everthing is OK
 * -1 = Wrong or missing access token
+* -2 = Wrong or missing state value
 
 ## Garage door status (api/v1/status)
 ### Parameters:

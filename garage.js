@@ -4,7 +4,7 @@ var https = require('https');
 var fs = require('fs');
 var keys = require('./keys');
 
-var currentVersion = '0.4.0';
+var currentVersion = '0.5.0';
 var currentName = 'Open Garage';
 var capi = 'v1';
 var httpsPort = 8000;
@@ -24,7 +24,7 @@ doorStatus.watch(function(err, value) {
 	
 	if (currentDoorStatus != value) {
 		currentDoorStatus = value;
-		logAPICall('Door status changed', false, garageStatusToString(currentDoorStatus));
+		logAPICall('Door status changed', false, garageStateToString(currentDoorStatus));
 	}
 });
 
@@ -58,26 +58,58 @@ app.get(['/', '/api/' + capi], function(req, res) {
 });
 
 /**
- * API TOGGLE CODES:
+ * API TOGGLE RETURN CODES:
  *  0: Everything is OK
  * -1: Wrong or missing access token
+ * -2: Wrong or missing state value
  */
 // api call: toggle
 app.post('/api/' + capi + '/toggle', function (req, res) {
 	var statuscode = 0;
 	var token = req.body.token;
 	var debug = req.body.debug;
+	var doorState = req.body.state;
 
 	if (isTokenValid(token)) {
-		if (debug == 1) {
-			logAPICall('DEBUG Toggle', false, 'token: ' + token)
-		} else {
-			toggleDoor();
-			logAPICall('Toggle', false, 'token: ' + token)
+		currentStatus = doorStatus.readSync();
+		
+		switch (doorState) {
+		case 'close': // close
+			if (currentStatus != 0) {
+				if (debug == 'on') {
+					logAPICall('DEBUG Close', false, 'token: ' + token + ' state: ' + doorState);
+				} else {
+					logAPICall('Close', false, 'token: ' + token + ' state: ' + doorState);
+					toggleDoor();
+				}
+			}
+			break;
+		case 'open': // open
+			if (currentStatus != 1) {
+				if (debug == 'on') {
+					logAPICall('DEBUG Open', false, 'token: ' + token + ' state: ' + doorState);
+				} else {
+					logAPICall('Open', false, 'token: ' + token + ' state: ' + doorState);
+					toggleDoor();
+				}
+			}
+			break;
+		case 'toggle': // toggle
+			if (debug == 'on') {
+				logAPICall('DEBUG Toggle', false, 'token: ' + token + ' state: ' + doorState);
+			} else {
+				logAPICall('Toggle Open', false, 'token: ' + token + ' state: ' + doorState);
+				toggleDoor();
+			}
+			break;
+		default:
+			statuscode = -2;
+			logAPICall('Toggle', true, 'token: ' + token + ' state: ' + doorState);
+			break;
 		}
 	} else {
 		statuscode = -1;
-		logAPICall('Toggle', true, 'token: ' + token)
+		logAPICall('Toggle', true, 'token: ' + token + ' state: ' + doorState);
 	}
 	
 	// create response
@@ -143,17 +175,17 @@ function logAPICall(apiCall, error, message) {
 	console.log(apiTxt + ': ' + apiCall + ' ' + message + ' Date: ' + Date().toString());
 }
 
-function garageStatusToString(doorStatus) {
-	var statusString = 'ERROR';
+function garageStateToString(doorState) {
+	var stateString = 'ERROR';
 	
-	switch (doorStatus) {
+	switch (doorState) {
 	case 0:
-		statusString = 'CLOSED';
+		stateString = 'CLOSED';
 		break;
 	case 1:
-		statusString = 'OPEN';
+		stateString = 'OPEN';
 		break;
 	}
 	
-	return statusString;
+	return stateString;
 }
