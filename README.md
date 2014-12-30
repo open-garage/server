@@ -133,7 +133,7 @@ sudo service open-garage stop
 sudo service open-garage restart
 ```
 
-# Api Calls
+# API Calls
 ## Toggle garage (api/v1/toggle)
 ### Parameters:
 * token: The authentication token
