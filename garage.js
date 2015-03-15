@@ -4,7 +4,7 @@ var https = require('https');
 var fs = require('fs');
 var keys = require('./keys');
 
-var currentVersion = '0.5.0';
+var currentVersion = '0.5.1';
 var currentName = 'Open Garage';
 var capi = 'v1';
 var httpsPort = 8000;
@@ -12,7 +12,7 @@ var httpsPort = 8000;
 // GPIO setup
 var Gpio = require('onoff').Gpio,
 	//door status GPIO
-	doorStatus = new Gpio(4, 'in', 'both'),
+	doorStatus = new Gpio(4, 'out', 'both'),
 	// door relay GPIO
 	doorRelay = new Gpio(17, 'high');
 
@@ -20,7 +20,10 @@ var currentDoorStatus = 0;
 
 // watch the door status
 doorStatus.watch(function(err, value) {
-	if (err) return;
+	if (err) {
+		logAPICall('Door status changed', true, garageStateToString(currentDoorStatus));
+		return;
+	}
 	
 	if (currentDoorStatus != value) {
 		currentDoorStatus = value;

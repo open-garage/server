@@ -3,9 +3,9 @@
 #                                                                             #
 # Simple script which communicates with the garage door                       #
 #                                                                             #
-# @version: 1.0.1                                                             #
+# @version: 1.0.2                                                             #
 # @author: Steiner Patrick <patrick@helmsdeep.at>                             #
-# @date: 13.12.2014 13:17                                                     #
+# @date: 15.03.2015 11:01                                                     #
 #                                                                             #
 ###############################################################################
 
@@ -22,8 +22,8 @@ GPIO=/usr/local/bin/gpio
 function init()
 {
 	sudo $GPIO export $R1PIN out
-	sudo $GPIO export $I1PIN in
-	$GPIO mode $I1PIN up
+	sudo $GPIO export $I1PIN out
+	$GPIO mode $I1PIN down
 }
 
 function api_toggle()
@@ -41,9 +41,6 @@ function api_toggle()
 function api_status()
 {
 	echo "CMD: status $DATE" >> $LOG
-	
-	# set door status pin to in
-	$GPIO mode $I1PIN in
 	
 	$GPIO read $I1PIN
 }
