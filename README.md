@@ -3,9 +3,9 @@
 ```
 sudo su -
 cd /opt
-wget http://nodejs.org/dist/v0.10.28/node-v0.10.28-linux-arm-pi.tar.gz
-tar xvzf node-v0.10.25-linux-arm-pi.tar.gz
-ln -s node-v0.10.25-linux-arm-pi node
+wget https://nodejs.org/dist/v4.4.7/node-v4.4.7-linux-armv6l.tar.xz
+tar xvfJ node-v4.4.7-linux-armv6l.tar.xz
+ln -s node-v4.4.7-linux-armv6l/ node
 chmod a+rw /opt/node/lib/node_modules
 chmod a+rw /opt/node/bin
 echo 'PATH=$PATH:/opt/node/bin' > /etc/profile.d/node.sh
