@@ -37,10 +37,7 @@ var permitedKeys = keys.permitedKeys;
 // SSL key / cert
 var options = {
 	key: fs.readFileSync('server.key'),
-	cert: fs.readFileSync('server.crt'),
-	ca: fs.readFileSync('ca.crt'),
-	requestCert: true,
-	rejectUnauthorized: false
+	cert: fs.readFileSync('server.crt')
 };
 
 var app = express();
