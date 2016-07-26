@@ -37,7 +37,12 @@ cd /opt/open-garage/
 npm install
 ```
 
+If there a problems installing the onoff npm, you should install a newer version of gcc.
+https://github.com/fivdi/onoff/wiki/Node.js-v4-and-native-addons
+
 ### Create SSL Certs
+#### Self-Signed
+
 ```
 cd /opt/open-garage/
 openssl genrsa -des3 -out ca.key 1024
@@ -57,6 +62,11 @@ Cert files (server.key, server.crt and ca.crt) needs to be in /opt/open-garage/
 
 Detailed Infos are available at:
 http://greengeckodesign.com/blog/2013/06/15/creating-an-ssl-certificate-for-node-dot-js/
+
+#### Let's Encrypt
+
+Use client from: https://github.com/Neilpang/acme.sh
+See the ```README.md``` for installation informations.
 
 ### Create entrance keys
 ```
