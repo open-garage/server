@@ -133,6 +133,7 @@ app.post('/api/' + capi + '/status', function(req, res) {
 	
 	if (isTokenValid(token)) {
 		statuscode = doorStatus.readSync();
+		logAPICall('Status', false, 'token: ' + token + ' state: ' + statuscode);
 	}
 	
 	// create response
