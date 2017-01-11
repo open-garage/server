@@ -4,7 +4,7 @@ var https = require('https');
 var fs = require('fs');
 var keys = require('./keys');
 
-var currentVersion = '0.5.2';
+var currentVersion = '0.5.3';
 var currentName = 'Open Garage';
 var capi = 'v1';
 var httpsPort = 8000;
@@ -173,7 +173,15 @@ function logAPICall(apiCall, error, message) {
 		apiTxt = 'ERROR';
 	}
 	
-	console.log(apiTxt + ': ' + apiCall + ' ' + message + ' Date: ' + Date().toString());
+	var logText = apiTxt + ': ' + apiCall + ' ' + message + ' Date: ' + Date().toString();
+
+	fs.writeFile("/tmp/garage.log", logText, function(err) {
+		if (err) {
+			return console.log(err);
+		}
+
+		console.log(logText);
+	});
 }
 
 function garageStateToString(doorState) {
