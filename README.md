@@ -1,19 +1,16 @@
-# Setup
+# Setup (Raspian - Stretch)
 ## Install Node.js
 ```
 sudo su -
 cd /opt
-wget https://nodejs.org/dist/v4.4.7/node-v4.4.7-linux-armv6l.tar.xz
-tar xvfJ node-v4.4.7-linux-armv6l.tar.xz
-ln -s node-v4.4.7-linux-armv6l/ node
+wget https://nodejs.org/dist/v6.11.3/node-v6.11.3-linux-armv6l.tar.xz
+tar xvfJ node-v6.11.3-linux-armv6l.tar.xz
+ls -s node-v6.11.3-linux-armv6l node
 chmod a+rw /opt/node/lib/node_modules
 chmod a+rw /opt/node/bin
 echo 'PATH=$PATH:/opt/node/bin' > /etc/profile.d/node.sh
 npm -g install forever
 ```
-
-Detailed Infos are available at:
-http://raspberryalphaomega.org.uk/2014/06/11/installing-and-using-node-js-on-raspberry-pi/
 
 ## Install Open-Garage
 ### Clone git repository
