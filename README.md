@@ -55,7 +55,7 @@ openssl rsa -in server.key.org -out server.key
 openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
 ```
 
-Cert files (server.key, server.crt and ca.crt) needs to be in /opt/open-garage/
+Cert files server.key, server.crt (fullchain cert) needs to be in /opt/open-garage/
 
 Detailed Infos are available at:
 http://greengeckodesign.com/blog/2013/06/15/creating-an-ssl-certificate-for-node-dot-js/
