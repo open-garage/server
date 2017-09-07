@@ -1,5 +1,5 @@
-# Setup (Raspian - Stretch)
-## Install Node.js
+# Setup
+## Install Node.js on Raspian (Stretch)
 ```
 sudo su -
 cd /opt
