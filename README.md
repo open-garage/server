@@ -23,7 +23,7 @@ git clone https://github.com/open-garage/server.git open-garage/
 
 ### Setup init script
 ```
-cd /opt/open-garage/
+cd /opt/open-garage/tools/
 sudo cp open-garage /etc/init.d/
 sudo update-rc.d open-garage defaults
 ```
@@ -73,7 +73,7 @@ cp keys.js.example keys.js
 
 Now edit the keys.js file an add entrance key strings.
 
-### Install wiringPi
+### Install wiringPi (Optional Step)
 ```
 cd /opt
 sudo mkdir wiringPi
