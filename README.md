@@ -3,9 +3,9 @@
 ```
 sudo su -
 cd /opt
-wget https://nodejs.org/dist/v6.11.3/node-v6.11.3-linux-armv6l.tar.xz
-tar xvfJ node-v6.11.3-linux-armv6l.tar.xz
-ls -s node-v6.11.3-linux-armv6l node
+wget https://nodejs.org/dist/v10.16.2/node-v10.16.2-linux-armv6l.tar.xz
+tar xJvf node-v10.16.2-linux-armv6l.tar.xz
+ls -s node-v10.16.2-linux-armv6l node
 chmod a+rw /opt/node/lib/node_modules
 chmod a+rw /opt/node/bin
 echo 'PATH=$PATH:/opt/node/bin' > /etc/profile.d/node.sh
@@ -149,7 +149,7 @@ sudo service open-garage restart
 
 ### Command
 ```
-curl -k -X POST "https://192.168.0.165:8000/api/v1/toggle" --header "Content-Type: application/json" --data '{"token":"A", "state":"close", "debug":"on"}'
+curl -X POST "https://192.168.0.165:8000/api/v1/toggle" --header "Content-Type: application/json" --data '{"token":"A", "state":"close", "debug":"on"}'
 ```
 
 ### Response
@@ -166,7 +166,7 @@ Status Codes:
 
 ### Command
 ```
-curl -k -X POST "https://192.168.0.165:8000/api/v1/status" --header "Content-Type: application/json" --data '{"token":"A"}'
+curl -X POST "https://192.168.0.165:8000/api/v1/status" --header "Content-Type: application/json" --data '{"token":"A"}'
 ```
 
 ### Response
@@ -180,5 +180,23 @@ Status Codes:
 ## Get system infos
 ### Command
 ```
-curl -k -X GET "https://192.168.0.165:8000/api/v1/"
+curl -X GET "https://192.168.0.165:8000/api/v1/"
+```
+
+# HomeKit Support
+First you have to install HomeBridge see: https://homebridge.io
+The HomeBridge plugin: `homebridge-garagedoor-command` is also required.
+
+Example homebridge `.config`
+
+```
+"accessories": [{
+    "accessory": "GarageCommand",
+    "name": "Garage Door",
+    "open": "/opt/open-garage/tools/homekit/garage-open.sh",
+    "close": "/opt/open-garage/tools/homekit/garage-close.sh",
+    "state": "/opt/open-garage/tools/homekit/garage-status.sh",
+    "status_update_delay": 15,
+    "poll_state_delay": 20
+}]
 ```
